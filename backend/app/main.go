@@ -1,11 +1,11 @@
 package main
 
-//import (
-//	"node-balancer/internal/server"
-//)
+import (
+	"crypto-executor/internal/server"
+)
 
 func main() {
-
-	//server.RunServer()
+	//fmt.Println("start")
+	server.RunServer()
 
 }
