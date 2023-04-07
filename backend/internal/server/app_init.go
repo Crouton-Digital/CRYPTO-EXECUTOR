@@ -1,6 +1,7 @@
 package server
 
 import (
+	"crypto-executor/external/evm"
 	"crypto-executor/internal/server/config"
 	"github.com/sirupsen/logrus"
 )
@@ -42,6 +43,8 @@ func RunServer() {
 	logrus.Debug("CONFIG")
 	logrus.Debug(config.Config)
 
+	evm.TronCreateAccount()
+	evm.EthGenerateWallet()
 	//go nodemonitoring.Run()
 	//StartRouter()
 }
