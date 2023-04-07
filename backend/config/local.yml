@@ -1,0 +1,96 @@
+
+server:
+    debug: DEBUG
+    http_port: 8080
+
+node_rating:
+  store_points: 10
+  error_rating: 100
+
+networks:
+  polygon:
+    domain: "polygon-nodes.dex-arbitrage.svc.cluster.local"
+    rules:
+      max_block_delay: 10
+      max_time_delay: 60
+      routing_nodes_min: 1
+      routing_nodes_max: 3
+      good_node_max_rating: 200
+    nodes:
+        - label: Polygon ECNG
+          url: http://144.76.18.142:36360
+          ws_url: http://65.108.201.189:36361
+          public: false
+          allow_routing: true
+        - label: Polygon ECNG2
+          url: http://65.108.201.189:36360
+          ws_url: http://65.108.201.189:36361
+          public: false
+          allow_routing: true
+        - label: Polygon ECNG Traefik
+          url: http://polygon-node.internal-fun-chegonibudj.com
+          ws_url: http://polygon-node.internal-fun-chegonibudj.com:81
+          public: false
+          allow_routing: true
+        - label: Polygon RPC
+          url: https://polygon-rpc.com
+          public: true
+          allow_routing: false
+        - label: Polygon Infura
+          url: https://polygon-mainnet.infura.io/v3/e444d8655de54657b719e041d951aac7
+          public: true
+          allow_routing: false
+  binance:
+    domain: "binance-nodes.dex-arbitrage.svc.cluster.local"
+    rules:
+      max_block_delay: 10
+      max_time_delay: 60
+      routing_nodes_min: 1
+      routing_nodes_max: 2
+      good_node_max_rating: 200
+    nodes:
+        - label: Binance ECNG
+          url: http://65.108.201.189:8545
+          public: false
+          allow_routing: true
+        - label: Binance
+          url: https://bsc-dataseed.binance.org
+          public: true
+          allow_routing: false
+  cronos:
+    domain: "cronos-nodes.dex-arbitrage.svc.cluster.local"
+    rules:
+      max_block_delay: 10
+      max_time_delay: 60
+      routing_nodes_min: 1
+      routing_nodes_max: 2
+      good_node_max_rating: 200
+    nodes:
+        - label: Cronos ECNG
+          url: http://142.132.130.196:26659
+          public: false
+          allow_routing: true
+        - label: Cronos
+          url: https://evm.cronos.org
+          public: true
+          allow_routing: false
+  avalanche:
+    domain: "avalanche-nodes.dex-arbitrage.svc.cluster.local"
+    rules:
+      max_block_delay: 10
+      max_time_delay: 60
+      routing_nodes_min: 1
+      routing_nodes_max: 2
+    nodes:
+        - label: Avalanche ECNG
+          url: http://api.axelar-node.internal-fun-chegonibudj.com:9650/ext/bc/C/rpc
+          public: false
+          allow_routing: true
+        - label: Avalanche
+          url: https://api.avax.network/ext/bc/C/rpc
+          public: true
+          allow_routing: false
+
+
+
+
