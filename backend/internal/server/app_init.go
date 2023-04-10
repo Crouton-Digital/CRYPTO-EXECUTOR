@@ -44,8 +44,8 @@ func RunServer() {
 
 	//evm.TronCreateAccount()
 	//evm.EthGenerateWallet()
-	//tron.GetAccountDetailedInfo("TN7QR62KsWqRUekXSUWgKcCWMxXBxS2WGE")
-	logrus.Info(tron.GetTronBalance("TN7QR62KsWqRUekXSUWgKcCWMxXBxS2WGE", tron.GetTokenAddress("USDT")))
+	tron.GetAccountDetailedInfo("TEDbDjEoVeX2qSBvLdbqGFSYG9SbMcELBy")
+	//logrus.Info(tron.GetTronBalance("TEDbDjEoVeX2qSBvLdbqGFSYG9SbMcELBy", tron.GetTokenAddress("USDT")))
 	//go nodemonitoring.Run()
 	//StartRouter()
 }
