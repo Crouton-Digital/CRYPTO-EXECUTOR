@@ -1,7 +1,7 @@
 package server
 
 import (
-	"crypto-executor/external/evm"
+	"crypto-executor/external/evm/tron"
 	"crypto-executor/internal/server/config"
 	"github.com/sirupsen/logrus"
 )
@@ -17,7 +17,6 @@ func RunServer() {
 	logrus.SetReportCaller(config.Config.ServerConfig.LogReportCaller)
 
 	logrus.Info("TRY LOAD CONFIG APP")
-	//logrus.SetFormatter(&logrus.JSONFormatter{})
 	switch config.Config.ServerConfig.DebugLevel {
 	case "INFO":
 		logrus.SetLevel(logrus.InfoLevel)
@@ -43,8 +42,10 @@ func RunServer() {
 	logrus.Debug("CONFIG")
 	logrus.Debug(config.Config)
 
-	evm.TronCreateAccount()
-	evm.EthGenerateWallet()
+	//evm.TronCreateAccount()
+	//evm.EthGenerateWallet()
+	//tron.GetAccountDetailedInfo("TN7QR62KsWqRUekXSUWgKcCWMxXBxS2WGE")
+	logrus.Info(tron.GetTronBalance("TN7QR62KsWqRUekXSUWgKcCWMxXBxS2WGE", tron.GetTokenAddress("USDT")))
 	//go nodemonitoring.Run()
 	//StartRouter()
 }
