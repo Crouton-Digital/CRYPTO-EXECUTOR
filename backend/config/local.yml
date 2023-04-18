@@ -1,6 +1,6 @@
 
 server:
-    debug: TRACE # INFO | ERROR | DEBUG | FATAL | PANIC | TRACE
+    debug: INFO # INFO | ERROR | DEBUG | FATAL | PANIC | TRACE
     log_report_caller: false
     http_port: 8080
 

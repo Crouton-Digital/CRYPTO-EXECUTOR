@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-func CreateAccount() {
+func CreateAccount(WalletName string) {
 
 	conn := client.NewGrpcClient("grpc.trongrid.io:50051")
 	err := conn.Start(grpc.WithInsecure())
@@ -18,7 +18,7 @@ func CreateAccount() {
 	}
 
 	acc := &account.Creation{
-		Name:       "maxiWallet",
+		Name:       WalletName,
 		Passphrase: "opdjkshdfshfuwefijui",
 	}
 
@@ -28,5 +28,6 @@ func CreateAccount() {
 	fmt.Printf("Tron Address: %s\n", addr)
 
 	store.DescribeLocalAccounts()
+	account.RemoveAccount(WalletName)
 
 }
