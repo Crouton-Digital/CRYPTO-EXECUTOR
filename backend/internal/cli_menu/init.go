@@ -51,11 +51,13 @@ L1:
 
 	if answers.Command == "okx" {
 		okxClient := okx.NewOkxClient()
-		okxClient.SetApiKey("3f58ce61-da83-443d-9390-ede0a8b02663")
-		okxClient.SetSecretKey("E2FA6C24FEB2144038FE19ED54E1ADCD")
-		okxClient.SetPassPhrase("9XmNhsUvkzZ8nNH&")
+		okxClient.SetApiKey("85a19e6e-fd39-4280-b783-448c19f54ebf")
+		okxClient.SetSecretKey("83FFBCECDB67AD177FE8D7E890621734")
+		okxClient.SetPassPhrase("n543F8355918qw4c&")
+		okxClient.SetDemoMode(false)
 
-		okxClient.GetBalance()
+		okxClient.GetAccountConfig()
+		//okxClient.GetTikerSpot()
 
 		goto L1
 	}
