@@ -1,10 +1,14 @@
 package okx
 
 import (
+	"bytes"
 	"encoding/json"
+	"errors"
+	"fmt"
 	"github.com/sirupsen/logrus"
 	"io"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -77,18 +81,63 @@ func (m *Okx) GenerateHeaders(request *http.Request, timestamp string, sign stri
 	return
 }
 
-func (m *Okx) HTTPRequest(httpRequestMethod string, httpRequestEndpoint string, params string) (body []byte, err error) {
+func (m *Okx) GenReqInfo(method string, httpRequestEndpoint string, params map[string]interface{}) (uri string, body string, err error) {
+	//uri = m.Url
 
-	httpRequestUrl := m.Url + httpRequestEndpoint
-	if len(params) > 1 {
-		httpRequestUrl = httpRequestUrl + "?" + params
+	switch method {
+	case GET:
+		getParam := []string{}
+
+		if len(params) == 0 {
+			return
+		}
+
+		for k, v := range params {
+			getParam = append(getParam, fmt.Sprintf("%v=%v", k, v))
+		}
+		uri = httpRequestEndpoint + "?" + strings.Join(getParam, "&")
+
+	case POST:
+
+		var rawBody []byte
+		rawBody, err = json.Marshal(params)
+		if err != nil {
+			return
+		}
+		body = string(rawBody)
+		uri = httpRequestEndpoint
+	default:
+		err = errors.New("request type unknown!")
+		return
 	}
 
+	return
+}
+
+func (m *Okx) HTTPRequest(httpRequestMethod string, httpRequestEndpoint string, params map[string]interface{}) (body []byte, err error) {
+
+	// Generate request data Params, Body, Uri (endpoint)
+	uri, bodyReq, err := m.GenReqInfo(httpRequestMethod, httpRequestEndpoint, params)
+	if err != nil {
+		logrus.Error(err)
+	}
+
+	httpRequestUrl := m.Url + uri
+	bodyBuf := new(bytes.Buffer)
+	bodyBuf.ReadFrom(strings.NewReader(bodyReq))
+
+	logrus.Debug("httpRequestUrl: ", httpRequestUrl)
+	logrus.Debug("uri: ", uri)
+	logrus.Debug("bodyBuf: ", bodyBuf)
+	logrus.Debug("err: ", err)
+
+	// Sign Headers for Request
 	timestamp := IsoTime()
-	preHash := PreHashString(timestamp, httpRequestMethod, httpRequestEndpoint, "")
+	preHash := PreHashString(timestamp, httpRequestMethod, uri, bodyReq)
 	signature, _ := HmacSha256Base64Signer(preHash, m.SecretKey)
 
-	req, _ := http.NewRequest(httpRequestMethod, httpRequestUrl, nil)
+	// New request prepare
+	req, _ := http.NewRequest(httpRequestMethod, httpRequestUrl, bodyBuf)
 	m.GenerateHeaders(req, timestamp, signature)
 
 	client := &http.Client{
@@ -113,34 +162,34 @@ func (m *Okx) HTTPRequest(httpRequestMethod string, httpRequestEndpoint string, 
 	return
 }
 
-func (m *Okx) GetStatus() {
-	httpRequestUrl := "/api/v5/system/status"
-	resp, getErr := http.Get(m.Url + httpRequestUrl)
-	if getErr != nil {
-		logrus.Fatal(getErr)
-	}
-	body, readErr := io.ReadAll(resp.Body)
-	if readErr != nil {
-		logrus.Fatal(readErr)
-	}
-
-	logrus.Info("GetStatus")
-	logrus.Info(string(body))
-}
-
-func (m *Okx) GetTikerSpot() {
-	httpRequestMethod := GET
-	httpRequestEndpoint := "/api/v5/market/tickers"
-	params := "instType=SPOT"
-
-	body, err := m.HTTPRequest(httpRequestMethod, httpRequestEndpoint, params)
-	if err != nil {
-		logrus.Error(err)
-	}
-
-	var data map[string]interface{}
-	json.Unmarshal(body, &data)
-	for key, value := range data {
-		logrus.Infoln(key, value)
-	}
-}
+//func (m *Okx) GetStatus() {
+//	httpRequestUrl := "/api/v5/system/status"
+//	resp, getErr := http.Get(m.Url + httpRequestUrl)
+//	if getErr != nil {
+//		logrus.Fatal(getErr)
+//	}
+//	body, readErr := io.ReadAll(resp.Body)
+//	if readErr != nil {
+//		logrus.Fatal(readErr)
+//	}
+//
+//	logrus.Info("GetStatus")
+//	logrus.Info(string(body))
+//}
+//
+//func (m *Okx) GetTikerSpot() {
+//	httpRequestMethod := GET
+//	httpRequestEndpoint := "/api/v5/market/tickers"
+//	params := "instType=SPOT"
+//
+//	body, err := m.HTTPRequest(httpRequestMethod, httpRequestEndpoint, params)
+//	if err != nil {
+//		logrus.Error(err)
+//	}
+//
+//	var data map[string]interface{}
+//	json.Unmarshal(body, &data)
+//	for key, value := range data {
+//		logrus.Infoln(key, value)
+//	}
+//}

@@ -56,7 +56,9 @@ L1:
 		okxClient.SetPassPhrase("n543F8355918qw4c&")
 		okxClient.SetDemoMode(false)
 
-		okxClient.GetAccountConfig()
+		//okxClient.GetAccountBalance()
+		okxClient.SetAccountPositionMode()
+
 		//okxClient.GetTikerSpot()
 
 		goto L1

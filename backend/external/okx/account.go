@@ -8,7 +8,8 @@ import (
 func (m *Okx) GetAccountBalance() {
 	httpRequestMethod := GET
 	httpRequestEndpoint := "/api/v5/account/balance"
-	params := ""
+	params := map[string]interface{}{}
+	params["ccy"] = "BTC"
 
 	body, err := m.HTTPRequest(httpRequestMethod, httpRequestEndpoint, params)
 	if err != nil {
@@ -26,7 +27,7 @@ func (m *Okx) GetAccountBalance() {
 func (m *Okx) GetAccountPosition() {
 	httpRequestMethod := GET
 	httpRequestEndpoint := "/api/v5/account/positions"
-	params := ""
+	params := map[string]interface{}{}
 
 	body, err := m.HTTPRequest(httpRequestMethod, httpRequestEndpoint, params)
 	if err != nil {
@@ -43,7 +44,7 @@ func (m *Okx) GetAccountPosition() {
 func (m *Okx) GetAccountPositionHistory() {
 	httpRequestMethod := GET
 	httpRequestEndpoint := "/api/v5/account/positions-history"
-	params := ""
+	params := map[string]interface{}{}
 
 	body, err := m.HTTPRequest(httpRequestMethod, httpRequestEndpoint, params)
 	if err != nil {
@@ -60,7 +61,7 @@ func (m *Okx) GetAccountPositionHistory() {
 func (m *Okx) GetAccountPositionRisk() {
 	httpRequestMethod := GET
 	httpRequestEndpoint := "/api/v5/account/account-position-risk"
-	params := ""
+	params := map[string]interface{}{}
 
 	body, err := m.HTTPRequest(httpRequestMethod, httpRequestEndpoint, params)
 	if err != nil {
@@ -77,7 +78,7 @@ func (m *Okx) GetAccountPositionRisk() {
 func (m *Okx) GetAccountBills() {
 	httpRequestMethod := GET
 	httpRequestEndpoint := "/api/v5/account/bills"
-	params := ""
+	params := map[string]interface{}{}
 
 	body, err := m.HTTPRequest(httpRequestMethod, httpRequestEndpoint, params)
 	if err != nil {
@@ -94,7 +95,7 @@ func (m *Okx) GetAccountBills() {
 func (m *Okx) GetAccountArchive() {
 	httpRequestMethod := GET
 	httpRequestEndpoint := "/api/v5/account/bills-archive"
-	params := ""
+	params := map[string]interface{}{}
 
 	body, err := m.HTTPRequest(httpRequestMethod, httpRequestEndpoint, params)
 	if err != nil {
@@ -111,7 +112,7 @@ func (m *Okx) GetAccountArchive() {
 func (m *Okx) GetAccountConfig() {
 	httpRequestMethod := GET
 	httpRequestEndpoint := "/api/v5/account/config"
-	params := ""
+	params := map[string]interface{}{}
 
 	body, err := m.HTTPRequest(httpRequestMethod, httpRequestEndpoint, params)
 	if err != nil {
@@ -125,19 +126,20 @@ func (m *Okx) GetAccountConfig() {
 	}
 }
 
-//func (m *Okx) SetAccountPositionMode() {
-//	httpRequestMethod := POST
-//	httpRequestEndpoint := "/api/v5/account/set-position-mode"
-//	params := "{\"posMode\":\"long_short_mode\"}"
-//
-//	body, err := m.HTTPRequest(httpRequestMethod, httpRequestEndpoint, params)
-//	if err != nil {
-//		logrus.Error(err)
-//	}
-//
-//	var data map[string]interface{}
-//	json.Unmarshal(body, &data)
-//	for key, value := range data {
-//		logrus.Infoln(key, value)
-//	}
-//}
+func (m *Okx) SetAccountPositionMode() {
+	httpRequestMethod := POST
+	httpRequestEndpoint := "/api/v5/account/set-position-mode"
+	params := map[string]interface{}{}
+	params["posMode"] = "long_short_mode"
+
+	body, err := m.HTTPRequest(httpRequestMethod, httpRequestEndpoint, params)
+	if err != nil {
+		logrus.Error(err)
+	}
+
+	var data map[string]interface{}
+	json.Unmarshal(body, &data)
+	for key, value := range data {
+		logrus.Infoln(key, value)
+	}
+}
