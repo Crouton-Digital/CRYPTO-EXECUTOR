@@ -57,7 +57,7 @@ L1:
 		okxClient.SetDemoMode(false)
 
 		//okxClient.GetAccountBalance()
-		okxClient.SetAccountPositionMode()
+		okxClient.GetSubAccountList()
 
 		//okxClient.GetTikerSpot()
 

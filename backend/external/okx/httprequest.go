@@ -89,6 +89,7 @@ func (m *Okx) GenReqInfo(method string, httpRequestEndpoint string, params map[s
 		getParam := []string{}
 
 		if len(params) == 0 {
+			uri = httpRequestEndpoint
 			return
 		}
 

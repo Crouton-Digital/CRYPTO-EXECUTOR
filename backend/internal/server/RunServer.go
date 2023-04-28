@@ -32,43 +32,24 @@ func RunServer() {
 		logrus.SetLevel(logrus.TraceLevel)
 	}
 
-	logrus.Info("INFO")
-	logrus.Error("ERROR")
-	logrus.Debug("DEBUG")
-	logrus.Trace("TRACE")
+	//logrus.Info("INFO")
+	//logrus.Error("ERROR")
+	//logrus.Debug("DEBUG")
+	//logrus.Trace("TRACE")
 	//logrus.Fatal("FATAL")
 	//logrus.Panic("PANIC")
 
 	logrus.Debug("CONFIG")
 	logrus.Debug(config.Config)
 
-	//ethereum.EthGenerateWalletWithMnemonic()
-
 	menu := cli_menu.Menu{
 		Promt:     "Test Menu",
 		CursorPos: 0,
 	}
 
-	menu.AddItem("Red", "red")
-	menu.AddItem("Green", "green")
-
 	err := menu.Start()
 	if err != nil {
 		logrus.Errorf("Crash menu: ", err)
 	}
-	//evm.CreateAccount("testTronAddres")
-	//evm.EthGenerateWallet()
-	//tron.GetAccountDetailedInfo("TEDbDjEoVeX2qSBvLdbqGFSYG9SbMcELBy")
-	//logrus.Info(tron.GetTronBalance("TEDbDjEoVeX2qSBvLdbqGFSYG9SbMcELBy", tron.GetTokenAddress("USDT")))
 
-	//tronClient := tronGRPC.NewGrpcClient("")
-	//err := tronClient.Connect(grpc.WithInsecure())
-	//if err != nil {
-	//	logrus.Errorf("Connecting GRPC Client: %v", err)
-	//}
-
-	//WalletClient := tronClient.Client.GetAccount()
-	//tronio.
-	//go nodemonitoring.Run()
-	//StartRouter()
 }

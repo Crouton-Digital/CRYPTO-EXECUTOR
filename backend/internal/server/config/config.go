@@ -8,12 +8,19 @@ import (
 
 type AppConfig struct {
 	ServerConfig Server `yaml:"server"`
+	OKX          OKX    `yaml:"okx"`
 }
 
 type Server struct {
 	HttpPort        string `yaml:"http_port"`
 	DebugLevel      string `yaml:"debug"`
 	LogReportCaller bool   `yaml:"log_report_caller"`
+}
+
+type OKX struct {
+	ApiKey     string `yaml:"api_key"`
+	SecretKey  string `yaml:"secret_key"`
+	PassPhrase string `yaml:"passphrase"`
 }
 
 var (
